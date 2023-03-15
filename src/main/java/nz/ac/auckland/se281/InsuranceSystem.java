@@ -24,6 +24,10 @@ public class InsuranceSystem {
     if (numberOfProfilesInt > 1) {
       numberOfProfilesString = String.valueOf(numberOfProfilesInt);
       MessageCli.PRINT_DB_POLICY_COUNT.printMessage(numberOfProfilesString, "s", ":");
+      for (int i = 0; i < numberOfProfilesInt; i++) {
+        System.out.println(" " + rank + ":" + " " + entireDatabase.getProfile(i));
+        rank++;
+      }
     }
   }
 
