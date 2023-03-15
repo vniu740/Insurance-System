@@ -1,6 +1,5 @@
 package nz.ac.auckland.se281;
 
-
 public class Profile {
 
   private String userName;
@@ -13,7 +12,6 @@ public class Profile {
 
   @Override
   public String toString() {
-    return userName + " " + age;
+    return userName + ", " + age;
   }
-
 }

@@ -19,4 +19,8 @@ public class Database {
   public int getTotalNumberOfProfiles() {
     return profileCollection.size();
   }
+
+  public Profile getProfile(int i) {
+    return profileCollection.get(i);
+  }
 }

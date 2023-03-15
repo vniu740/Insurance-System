@@ -11,9 +11,20 @@ public class InsuranceSystem {
   }
 
   public void printDatabase() {
-
-    System.out.println(
-        "Number of profiles in database is: " + entireDatabase.getTotalNumberOfProfiles());
+    int rank = 1;
+    int numberOfProfilesInt = entireDatabase.getTotalNumberOfProfiles();
+    String numberOfProfilesString;
+    if (numberOfProfilesInt == 0) {
+      MessageCli.PRINT_DB_POLICY_COUNT.printMessage("0", "s", ".");
+    }
+    if (numberOfProfilesInt == 1) {
+      MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", "", ":");
+      System.out.println(" " + rank + ":" + " " + entireDatabase.getProfile(0));
+    }
+    if (numberOfProfilesInt > 1) {
+      numberOfProfilesString = String.valueOf(numberOfProfilesInt);
+      MessageCli.PRINT_DB_POLICY_COUNT.printMessage(numberOfProfilesString, "s", ":");
+    }
   }
 
   public void createNewProfile(String userName, String age) {
@@ -38,6 +49,7 @@ public class InsuranceSystem {
         Profile newProfile = new Profile(userName, age);
         entireDatabase.addProfileToCollection(newProfile);
         MessageCli.PROFILE_CREATED.printMessage(userName, age);
+        System.out.println("the format is " + newProfile);
         break;
       }
     }
