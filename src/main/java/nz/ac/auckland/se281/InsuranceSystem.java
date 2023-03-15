@@ -44,6 +44,9 @@ public class InsuranceSystem {
       if (userName.length() < 3) {
         MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName);
         break;
+      }
+      if (entireDatabase.isProfileUnique(userName) == false) {
+        MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(userName);
       } else {
         // create new profile instance
         Profile newProfile = new Profile(userName, age);

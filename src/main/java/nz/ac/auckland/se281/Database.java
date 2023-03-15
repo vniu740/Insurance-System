@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class Database {
 
-  private String databaseName;
+  private String dataBaseName;
 
   private ArrayList<Profile> profileCollection = new ArrayList<Profile>();
 
-  public Database(String databaseName) {
-    this.databaseName = databaseName;
+  public Database(String dataBaseName) {
+    this.dataBaseName = dataBaseName;
   }
 
   public void addProfileToCollection(Profile profile) {
@@ -22,5 +22,14 @@ public class Database {
 
   public Profile getProfile(int i) {
     return profileCollection.get(i);
+  }
+
+  public boolean isProfileUnique(String Usernammm) {
+    for (Profile element : profileCollection) {
+      if (element.toString().contains(Usernammm)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
