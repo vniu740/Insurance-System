@@ -10,6 +10,14 @@ public class Profile {
     this.age = age;
   }
 
+  public String getUserNameProfileClass() {
+    return userName;
+  }
+
+  public String getAgeProfileClass() {
+    return age;
+  }
+
   @Override
   public String toString() {
     return userName + ", " + age;
