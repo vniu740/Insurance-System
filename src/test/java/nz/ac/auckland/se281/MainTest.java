@@ -14,7 +14,7 @@ import org.junit.runners.Suite.SuiteClasses;
   MainTest.Task1.class,
   // MainTest.Task2.class, // Uncomment this line when to start Task 2
   // MainTest.Task3.class, // Uncomment this line when to start Task 3
-  // MainTest.YourTests.class, // Uncomment this line to run your own tests
+  MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
   public static class Task1 extends CliTest {
@@ -361,18 +361,102 @@ public class MainTest {
       super(Main.class);
     }
 
-    @Test
+    /*  @Test
     public void TY_01_your_own_test() throws Exception {
       // Write your own test here, in the same format as the other tests.
       runCommands(PRINT_DB);
       assertContains("");
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void TY_02_your_own_test() throws Exception {
       // Write your own test here, in the same format as the other tests.
       runCommands(PRINT_DB);
       assertContains("");
+    }*/
+
+    @Test
+    public void T1_01_add_three_clients_with_info() throws Exception {
+      runCommands(
+          CREATE_PROFILE,
+          "JORdan",
+          "21",
+          CREATE_PROFILE,
+          "TOm",
+          "25",
+          CREATE_PROFILE,
+          "LINDa",
+          "19",
+          PRINT_DB);
+      assertContains("New profile created for Jordan with age 21.");
+      assertContains("New profile created for Tom with age 25.");
+      assertContains("New profile created for Linda with age 19.");
+      assertContains("Database has 3 profiles:");
+      assertContains("1: Jordan, 21");
+      assertContains("2: Tom, 25");
+      assertContains("3: Linda, 19");
+      assertDoesNotContain("Database has 0 profiles", true);
+      assertDoesNotContain("Database has 1 profile", true);
+      assertDoesNotContain("Database has 2 profiles", true);
+    }
+
+    @Test
+    public void T1_02_add_non_unique_username() throws Exception {
+      runCommands(CREATE_PROFILE, "JORdan", "21", CREATE_PROFILE, "jORDAN", "19", PRINT_DB);
+      assertContains("New profile created for Jordan with age 21.");
+      assertContains("Usernames must be unique. No profile was created for 'Jordan'.");
+      assertContains("Database has 1 profile:");
+      assertContains("1: Jordan, 21");
+      assertDoesNotContain("Database has 0 profiles", true);
+      assertDoesNotContain("Database has 2 profiles", true);
+    }
+
+    @Test
+    public void T1_03_age_is_a_word() throws Exception {
+      runCommands(CREATE_PROFILE, "Jordan", "twenty", PRINT_DB);
+      assertContains(
+          "'twenty' is an invalid age, please provide a positive whole number only. No profile was"
+              + " created for Jordan.");
+      assertContains("Database has 0 profiles");
+      assertDoesNotContain("Database has 1 profiles", true);
+      assertDoesNotContain("Database has 2 profiles", true);
+      assertDoesNotContain("New profile created for Jordan with age 21.", true);
+    }
+
+    @Test
+    public void T1_04_age_is_a_negative_integer() throws Exception {
+      runCommands(CREATE_PROFILE, "Jordan", "-19", PRINT_DB);
+      assertContains(
+          "'-19' is an invalid age, please provide a positive whole number only. No profile was"
+              + " created for Jordan.");
+      assertContains("Database has 0 profiles");
+      assertDoesNotContain("Database has 1 profiles", true);
+      assertDoesNotContain("Database has 2 profiles", true);
+      assertDoesNotContain("New profile created for Jordan with age 21.", true);
+    }
+
+    @Test
+    public void T1_05_add_two_clients_and_non_unique_username() throws Exception {
+      runCommands(
+          CREATE_PROFILE,
+          "JORdan",
+          "21",
+          CREATE_PROFILE,
+          "TOm",
+          "25",
+          CREATE_PROFILE,
+          "jordan",
+          "19",
+          PRINT_DB);
+      assertContains("New profile created for Jordan with age 21.");
+      assertContains("New profile created for Tom with age 25.");
+      assertContains("Usernames must be unique. No profile was created for 'Jordan'.");
+      assertContains("Database has 2 profiles:");
+      assertContains("1: Jordan, 21");
+      assertContains("2: Tom, 25");
+      assertDoesNotContain("Database has 0 profiles", true);
+      assertDoesNotContain("Database has 1 profile", true);
+      assertDoesNotContain("Database has 3 profiles", true);
     }
   }
 
