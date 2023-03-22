@@ -458,6 +458,92 @@ public class MainTest {
       assertDoesNotContain("Database has 1 profile", true);
       assertDoesNotContain("Database has 3 profiles", true);
     }
+
+    @Test
+    public void T1_06_create_profile_all_caps() throws Exception {
+      runCommands(CREATE_PROFILE, "JORDAN", "19", PRINT_DB);
+      assertContains("Database has 1 profile:");
+      assertContains("New profile created for Jordan with age 19.");
+      assertContains("1: Jordan, 19");
+      assertDoesNotContain("New profile created for JORDAN with age 19.");
+    }
+
+    @Test
+    public void T1_07_create_profile_all_lower_caps() throws Exception {
+      runCommands(CREATE_PROFILE, "jordan", "19", PRINT_DB);
+      assertContains("Database has 1 profile:");
+      assertContains("New profile created for Jordan with age 19.");
+      assertContains("1: Jordan, 19");
+      assertDoesNotContain("New profile created for jordan with age 19.");
+    }
+
+    @Test
+    public void T1_08_add_four_clients_with_info() throws Exception {
+      runCommands(
+          CREATE_PROFILE,
+          "JORdan",
+          "21",
+          CREATE_PROFILE,
+          "TOm",
+          "25",
+          CREATE_PROFILE,
+          "LINDa",
+          "19",
+          CREATE_PROFILE,
+          "peter",
+          "81",
+          PRINT_DB);
+      assertContains("New profile created for Jordan with age 21.");
+      assertContains("New profile created for Tom with age 25.");
+      assertContains("New profile created for Linda with age 19.");
+      assertContains("New profile created for Peter with age 81.");
+      assertContains("Database has 4 profiles:");
+      assertContains("1: Jordan, 21");
+      assertContains("2: Tom, 25");
+      assertContains("3: Linda, 19");
+      assertContains("4: Peter, 81");
+      assertDoesNotContain("Database has 0 profiles", true);
+      assertDoesNotContain("Database has 1 profile", true);
+      assertDoesNotContain("Database has 2 profiles", true);
+      assertDoesNotContain("Database has 3 profiles", true);
+    }
+
+    @Test
+    public void T1_09_add_five_clients_with_info() throws Exception {
+      runCommands(
+          CREATE_PROFILE,
+          "JORdan",
+          "21",
+          CREATE_PROFILE,
+          "TOm",
+          "25",
+          CREATE_PROFILE,
+          "LINDa",
+          "19",
+          CREATE_PROFILE,
+          "peter",
+          "81",
+          CREATE_PROFILE,
+          "REBECCA",
+          "100",
+          PRINT_DB);
+      assertContains("New profile created for Jordan with age 21.");
+      assertContains("New profile created for Tom with age 25.");
+      assertContains("New profile created for Linda with age 19.");
+      assertContains("New profile created for Peter with age 81.");
+      assertContains("New profile created for Rebecca with age 100.");
+      assertContains("Database has 5 profiles:");
+      assertContains("1: Jordan, 21");
+      assertContains("2: Tom, 25");
+      assertContains("3: Linda, 19");
+      assertContains("4: Peter, 81");
+      assertContains("5: Rebecca, 100");
+      assertDoesNotContain("Database has 0 profiles", true);
+      assertDoesNotContain("Database has 1 profile", true);
+      assertDoesNotContain("Database has 2 profiles", true);
+      assertDoesNotContain("Database has 3 profiles", true);
+      assertDoesNotContain("Database has 4 profiles", true);
+    }
   }
 
   private static final Object[] CREATE_SOME_CLIENTS =
