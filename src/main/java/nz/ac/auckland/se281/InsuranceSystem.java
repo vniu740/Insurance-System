@@ -95,7 +95,7 @@ public class InsuranceSystem {
         rankString = String.valueOf(rank);
         if (profileCollection.get(i).getProfileLoadedStatus() == true) {
           MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
-              "***", rankString, getUsername(i), getAge(i));
+              "*** ", rankString, getUsername(i), getAge(i));
         } else {
           MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
               rankString, getUsername(i), getAge(i));
