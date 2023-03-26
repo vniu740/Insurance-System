@@ -43,6 +43,12 @@ public class InsuranceSystem {
     return gotProfile.getAgeProfileClass();
   }
 
+  public String turnToTitleCase(String notTitleCase) {
+    notTitleCase = notTitleCase.toLowerCase();
+    notTitleCase = notTitleCase.substring(0, 1).toUpperCase() + notTitleCase.substring(1);
+    return notTitleCase;
+  }
+
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
 
@@ -78,10 +84,22 @@ public class InsuranceSystem {
       MessageCli.PRINT_DB_POLICY_COUNT.printMessage(numberOfProfilesString, "s", ":");
 
       // Get each profile and print it by looping through the Arraylist
+      // for (int i = 0; i < numberOfProfilesInt; i++) {
+      //   rankString = String.valueOf(rank);
+      //   MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
+      //       rankString, getUsername(i), getAge(i));
+      //   rank++;
+      // }
+
       for (int i = 0; i < numberOfProfilesInt; i++) {
         rankString = String.valueOf(rank);
-        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
-            rankString, getUsername(i), getAge(i));
+        if (profileCollection.get(i).getProfileLoadedStatus() == true) {
+          MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
+              "***", rankString, getUsername(i), getAge(i));
+        } else {
+          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
+              rankString, getUsername(i), getAge(i));
+        }
         rank++;
       }
     }
@@ -90,8 +108,9 @@ public class InsuranceSystem {
   public void createNewProfile(String userName, String age) {
 
     // Change the username input to title case
-    userName = userName.toLowerCase();
-    userName = userName.substring(0, 1).toUpperCase() + userName.substring(1);
+    // userName = userName.toLowerCase();
+    // userName = userName.substring(0, 1).toUpperCase() + userName.substring(1);
+    userName = turnToTitleCase(userName);
 
     // Check if username input is less than 3 letters, if it is, print out invalid message and stop
     // running method
@@ -123,7 +142,25 @@ public class InsuranceSystem {
   }
 
   public void loadProfile(String userName) {
-    // TODO: Complete this method.
+    // Turn input userName to title case by calling the method turnToTitleCase
+    userName = turnToTitleCase(userName);
+
+    // Use method to determine if inputted username is stored in arraylist, if it is not (i.e not
+    // unique) profile is loaded
+    // otherwise if it is not unique, the profile is loaded
+    if (isProfileUnique(userName) == true) {
+      MessageCli.NO_PROFILE_FOUND_TO_LOAD.printMessage(userName);
+    } else {
+      // Print profile has been loaded message
+      MessageCli.PROFILE_LOADED.printMessage(userName);
+
+      // Set boolean isProfileLoaded to true
+      for (Profile element : profileCollection) {
+        if (element.toString().contains(userName)) {
+          element.setProfileLoadedStatusToTrue();
+        }
+      }
+    }
   }
 
   public void unloadProfile() {
