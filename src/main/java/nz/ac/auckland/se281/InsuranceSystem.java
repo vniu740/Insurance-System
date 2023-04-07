@@ -192,7 +192,34 @@ public class InsuranceSystem {
   }
 
   public void deleteProfile(String userName) {
-    // TODO: Complete this method.
+    // Turn input userName to title case by calling the method turnToTitleCase
+    userName = turnToTitleCase(userName);
+
+    // check if profile is in database
+    // if the profile is not in the database, print no profile found message
+    if (isProfileUnique(userName) == true) {
+      MessageCli.NO_PROFILE_FOUND_TO_DELETE.printMessage(userName);
+    } else {
+      // if the profile is in the database:
+      // check if the profile that the user wants to delete is loaded, if it is print cannot delete
+      // profile message
+      for (Profile element : profileCollection) {
+        if (element.getUserNameProfileClass().equals(userName)) {
+          if (element.getProfileLoadedStatus() == true) {
+            MessageCli.CANNOT_DELETE_PROFILE_WHILE_LOADED.printMessage(userName);
+            return;
+          }
+        }
+      }
+      // if the profile is not loaded, remove the profile from the arraylist and print deleted
+      // message
+      for (int i = 0; i < profileCollection.size(); i++) {
+        if (profileCollection.get(i).getUserNameProfileClass().equals(userName)) {
+          profileCollection.remove(i);
+          MessageCli.PROFILE_DELETED.printMessage(userName);
+        }
+      }
+    }
   }
 
   public void createPolicy(PolicyType type, String[] options) {

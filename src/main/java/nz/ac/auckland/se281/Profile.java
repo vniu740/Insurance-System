@@ -12,7 +12,6 @@ public class Profile {
     this.age = age;
   }
 
-  
   // Method for returning Profile instance userName as a string
   public String getUserNameProfileClass() {
     return userName;
