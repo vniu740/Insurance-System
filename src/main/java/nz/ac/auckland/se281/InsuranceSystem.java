@@ -220,6 +220,7 @@ public class InsuranceSystem {
   public void createPolicy(PolicyType type, String[] options) {
 
     Profile loadedProfile = null;
+    Policy newPolicy;
 
     // check for loaded profile
     for (Profile element : profileCollection) {
@@ -231,6 +232,44 @@ public class InsuranceSystem {
       // if a profile is not loaded print the message that a profile must be loaded to create a
       // policy
       MessageCli.NO_PROFILE_FOUND_TO_CREATE_POLICY.printMessage();
+    }
+
+    // if profile is loaded create new policy for specific policy type
+    if (loadedProfile != null) {
+      boolean inputMechanicalBreakdown;
+      boolean inputRental;
+
+      switch (type) {
+        case CAR:
+          // Change inputMechanicalBreakdown input in options array from string to boolean
+          if (options[3].equals("y") || options[3].equals("yes")) {
+            inputMechanicalBreakdown = true;
+          } else {
+            inputMechanicalBreakdown = false;
+          }
+          // Create new car policy
+          newPolicy =
+              new CarPolicy(
+                  Integer.parseInt(options[0]), options[1], options[2], inputMechanicalBreakdown);
+          // System.out.println(newPolicy.toString());
+          break;
+
+        case HOME:
+          // Change inputRental input in options array from string to boolean
+          if (options[2].equals("y") || options[2].equals("yes")) {
+            inputRental = true;
+          } else {
+            inputRental = false;
+          }
+
+          // Create new home policy
+          newPolicy = new HomePolicy(Integer.parseInt(options[0]), options[1], inputRental);
+          break;
+
+        case LIFE:
+          // create new life policy
+          newPolicy = new LifePolicy(Integer.parseInt(options[0]));
+      }
     }
   }
 }

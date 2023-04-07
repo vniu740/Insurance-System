@@ -13,6 +13,12 @@ public class CarPolicy extends Policy{
         this.mechanicalBreakdown = mechanicalBreakdown;
     }
 
+    // @Override
+    // public String toString() {
+    //     // TODO Auto-generated method stub
+    //     return "sum Insured =" + sumInsured + " make and model = " + makeAndModel + "License plate = " + licensePlate + "mechanical breakdown = " + mechanicalBreakdown;
+    // }
+
     
 
 }
