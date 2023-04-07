@@ -22,9 +22,8 @@ public class InsuranceSystem {
   public boolean isProfileUnique(String uncertainUsername) {
     // Loop through arraylist profileCollection
     for (Profile element : profileCollection) {
-      // if the profile turned int to a string (toString method in Profile class) contains the
-      // inputted username, return false
-      if (element.toString().contains(uncertainUsername)) {
+      // if the profile has the same username as the inputted username return false
+      if (element.getUserNameProfileClass().equals(uncertainUsername)) {
         return false;
       }
     }
