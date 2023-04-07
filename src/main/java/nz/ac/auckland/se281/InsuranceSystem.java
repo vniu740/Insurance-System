@@ -178,7 +178,17 @@ public class InsuranceSystem {
   }
 
   public void unloadProfile() {
-    // TODO: Complete this method.
+    // loop through profileCollection arraylist and check if any profile is loaded
+    for (Profile element : profileCollection) {
+      // if the profile is loaded, unload it and print out unloaded message
+      if (element.getProfileLoadedStatus() == true) {
+        element.setProfileLoadedStatusToFalse();
+        MessageCli.PROFILE_UNLOADED.printMessage(element.getUserNameProfileClass());
+        return;
+      }
+    }
+    // if no profile is unloaded, print the no profile loaded message
+    MessageCli.NO_PROFILE_LOADED.printMessage();
   }
 
   public void deleteProfile(String userName) {
