@@ -83,19 +83,14 @@ public class InsuranceSystem {
       MessageCli.PRINT_DB_POLICY_COUNT.printMessage(numberOfProfilesString, "s", ":");
 
       // Get each profile and print it by looping through the Arraylist
-      // for (int i = 0; i < numberOfProfilesInt; i++) {
-      //   rankString = String.valueOf(rank);
-      //   MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
-      //       rankString, getUsername(i), getAge(i));
-      //   rank++;
-      // }
-
       for (int i = 0; i < numberOfProfilesInt; i++) {
         rankString = String.valueOf(rank);
+        // if the profile is loaded, print the profile with the loaded profile message
         if (profileCollection.get(i).getProfileLoadedStatus() == true) {
           MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
               "*** ", rankString, getUsername(i), getAge(i));
         } else {
+          // print the normal profile message
           MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
               rankString, getUsername(i), getAge(i));
         }

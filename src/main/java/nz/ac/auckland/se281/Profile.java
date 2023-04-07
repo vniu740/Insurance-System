@@ -4,7 +4,7 @@ public class Profile {
 
   private String userName;
   private String age;
-  private boolean ProfileLoadedStatus = false;
+  private boolean profileLoadedStatus = false;
 
   // Define Profile constructor
   public Profile(String userName, String age) {
@@ -29,16 +29,16 @@ public class Profile {
   }
 
   public boolean setProfileLoadedStatusToTrue() {
-    ProfileLoadedStatus = true;
-    return ProfileLoadedStatus;
+    profileLoadedStatus = true;
+    return profileLoadedStatus;
   }
 
   public boolean setProfileLoadedStatusToFalse() {
-    ProfileLoadedStatus = false;
-    return ProfileLoadedStatus;
+    profileLoadedStatus = false;
+    return profileLoadedStatus;
   }
 
   public boolean getProfileLoadedStatus() {
-    return ProfileLoadedStatus;
+    return profileLoadedStatus;
   }
 }
