@@ -218,6 +218,19 @@ public class InsuranceSystem {
   }
 
   public void createPolicy(PolicyType type, String[] options) {
-    // TODO: Complete this method.
+
+    Profile loadedProfile = null;
+
+    // check for loaded profile
+    for (Profile element : profileCollection) {
+      // if a profile is loaded set the loadedProfile to the profile
+      if (element.getProfileLoadedStatus() == true) {
+        loadedProfile = element;
+        break;
+      }
+      // if a profile is not loaded print the message that a profile must be loaded to create a
+      // policy
+      MessageCli.NO_PROFILE_FOUND_TO_CREATE_POLICY.printMessage();
+    }
   }
 }

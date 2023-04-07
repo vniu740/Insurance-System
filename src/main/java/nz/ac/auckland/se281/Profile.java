@@ -1,10 +1,13 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class Profile {
 
   private String userName;
   private String age;
   private boolean profileLoadedStatus = false;
+  ArrayList<Policy> arrayOfPolicies = new ArrayList<>();
 
   // Define Profile constructor
   public Profile(String userName, String age) {
