@@ -112,6 +112,15 @@ public class InsuranceSystem {
     // userName = userName.substring(0, 1).toUpperCase() + userName.substring(1);
     userName = turnToTitleCase(userName);
 
+    // Check if profile is already loaded, if it is, print out invalid message and stop running
+    // mrthod
+    for (Profile element : profileCollection) {
+      if (element.getProfileLoadedStatus() == true) {
+        MessageCli.CANNOT_CREATE_WHILE_LOADED.printMessage(element.getUserNameProfileClass());
+        return;
+      }
+    }
+
     // Check if username input is less than 3 letters, if it is, print out invalid message and stop
     // running method
     if (userName.length() < 3) {
@@ -151,6 +160,12 @@ public class InsuranceSystem {
     if (isProfileUnique(userName) == true) {
       MessageCli.NO_PROFILE_FOUND_TO_LOAD.printMessage(userName);
     } else {
+      // check if any profiles are already loaded, if they are, unload them
+      for (Profile element : profileCollection) {
+        if (element.getProfileLoadedStatus() == true) {
+          element.setProfileLoadedStatusToFalse();
+        }
+      }
       // Print profile has been loaded message
       MessageCli.PROFILE_LOADED.printMessage(userName);
 
