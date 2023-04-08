@@ -69,8 +69,17 @@ public class InsuranceSystem {
 
     // If the total number of profiles is 1, print the specific message for 1 profile
     if (numberOfProfilesInt == 1) {
-      MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", "", ":");
-      MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", getUsername(0), getAge(0));
+      // MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", "", ":");
+      // MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", getUsername(0), getAge(0));
+
+      // if the profile is loaded, print the profile with the loaded profile message
+      if (profileCollection.get(0).getProfileLoadedStatus() == true) {
+        MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
+            "*** ", "1", getUsername(0), getAge(0));
+      } else {
+        // If the profile is not loaded, print the normal profile message
+        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", getUsername(0), getAge(0));
+      }
     }
 
     // If the total number of profiles is greater than 1,
@@ -165,7 +174,7 @@ public class InsuranceSystem {
 
       // Set boolean isProfileLoaded to true
       for (Profile element : profileCollection) {
-        if (element.toString().contains(userName)) {
+        if (element.getUserNameProfileClass().equals(userName)) {
           element.setProfileLoadedStatusToTrue();
         }
       }
@@ -251,9 +260,7 @@ public class InsuranceSystem {
           newPolicy =
               new CarPolicy(
                   Integer.parseInt(options[0]), options[1], options[2], inputMechanicalBreakdown);
-          
-          // add new policy to loaded profile array
-          loadedProfile.addPolicyToProfileArray(newPolicy);
+          // System.out.println(newPolicy.toString());
           break;
 
         case HOME:
@@ -269,13 +276,12 @@ public class InsuranceSystem {
 
           // add new policy to loaded profile array
           loadedProfile.addPolicyToProfileArray(newPolicy);
+
           break;
 
         case LIFE:
           // create new life policy
           newPolicy = new LifePolicy(Integer.parseInt(options[0]));
-          // add new policy to loaded profile array
-          loadedProfile.addPolicyToProfileArray(newPolicy);
       }
     }
   }

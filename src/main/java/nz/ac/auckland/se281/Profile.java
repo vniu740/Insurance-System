@@ -25,7 +25,7 @@ public class Profile {
     return age;
   }
 
-  // Turn profile attributes into a string
+  // // Turn profile attributes into a string
   // @Override
   // public String toString() {
   //   return userName + ", " + age;
@@ -47,5 +47,9 @@ public class Profile {
 
   public void addPolicyToProfileArray(Policy policy) {
     arrayOfPolicies.add(policy);
+  }
+
+  public String getSizeOfArrayOfPolicies() {
+    return String.valueOf(arrayOfPolicies.size());
   }
 }
