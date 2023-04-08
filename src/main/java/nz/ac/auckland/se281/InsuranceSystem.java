@@ -273,9 +273,13 @@ public class InsuranceSystem {
         loadedProfile = element;
         break;
       }
-      // if a profile is not loaded print the message that a profile must be loaded to create a
-      // policy
+    }
+
+    // if a profile is not loaded print the message that a profile must be loaded to create a
+    // policy
+    if (loadedProfile == null) {
       MessageCli.NO_PROFILE_FOUND_TO_CREATE_POLICY.printMessage();
+      return;
     }
 
     // if profile is loaded create new policy for specific policy type
@@ -295,6 +299,9 @@ public class InsuranceSystem {
           newPolicy =
               new CarPolicy(
                   Integer.parseInt(options[0]), options[1], options[2], inputMechanicalBreakdown);
+          // print new policy added message
+          MessageCli.NEW_POLICY_CREATED.printMessage(
+              "car", loadedProfile.getUserNameProfileClass());
 
           // add new policy to loaded profile array
           loadedProfile.addPolicyToProfileArray(newPolicy);
@@ -310,6 +317,9 @@ public class InsuranceSystem {
 
           // Create new home policy
           newPolicy = new HomePolicy(Integer.parseInt(options[0]), options[1], inputRental);
+          // print new policy added message
+          MessageCli.NEW_POLICY_CREATED.printMessage(
+              "home", loadedProfile.getUserNameProfileClass());
 
           // add new policy to loaded profile array
           loadedProfile.addPolicyToProfileArray(newPolicy);
@@ -322,6 +332,9 @@ public class InsuranceSystem {
 
           // add new policy to loaded profile array
           loadedProfile.addPolicyToProfileArray(newPolicy);
+          // print new policy added message
+          MessageCli.NEW_POLICY_CREATED.printMessage(
+              "life", loadedProfile.getUserNameProfileClass());
       }
     }
   }
