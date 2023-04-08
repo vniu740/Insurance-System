@@ -7,5 +7,8 @@ public abstract class Policy {
     public Policy(int sumInsured) {
         this.sumInsured = sumInsured;
     }
+
+    // all policies calculate base premium differently
+    public abstract int calculateBasePremium(Profile loadedProfile);
     
 }

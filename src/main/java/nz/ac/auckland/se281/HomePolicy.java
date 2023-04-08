@@ -11,6 +11,13 @@ public class HomePolicy extends Policy{
         this.rental = rental;
     }
 
-    
+    @Override
+    public int calculateBasePremium(Profile loadedProfile) {
+       if (this.rental == true) {
+        return (int)(0.2 * sumInsured);
+       } else {
+        return (int)(0.1 * sumInsured);
+       }
+    }   
     
 }

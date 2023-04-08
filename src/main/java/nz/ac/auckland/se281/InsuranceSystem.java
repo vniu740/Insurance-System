@@ -251,7 +251,9 @@ public class InsuranceSystem {
           newPolicy =
               new CarPolicy(
                   Integer.parseInt(options[0]), options[1], options[2], inputMechanicalBreakdown);
-          // System.out.println(newPolicy.toString());
+          
+          // add new policy to loaded profile array
+          loadedProfile.addPolicyToProfileArray(newPolicy);
           break;
 
         case HOME:
@@ -264,11 +266,16 @@ public class InsuranceSystem {
 
           // Create new home policy
           newPolicy = new HomePolicy(Integer.parseInt(options[0]), options[1], inputRental);
+
+          // add new policy to loaded profile array
+          loadedProfile.addPolicyToProfileArray(newPolicy);
           break;
 
         case LIFE:
           // create new life policy
           newPolicy = new LifePolicy(Integer.parseInt(options[0]));
+          // add new policy to loaded profile array
+          loadedProfile.addPolicyToProfileArray(newPolicy);
       }
     }
   }

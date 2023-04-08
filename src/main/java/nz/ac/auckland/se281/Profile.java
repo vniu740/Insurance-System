@@ -26,10 +26,10 @@ public class Profile {
   }
 
   // Turn profile attributes into a string
-  @Override
-  public String toString() {
-    return userName + ", " + age;
-  }
+  // @Override
+  // public String toString() {
+  //   return userName + ", " + age;
+  // }
 
   public boolean setProfileLoadedStatusToTrue() {
     profileLoadedStatus = true;
@@ -43,5 +43,9 @@ public class Profile {
 
   public boolean getProfileLoadedStatus() {
     return profileLoadedStatus;
+  }
+
+  public void addPolicyToProfileArray(Policy policy) {
+    arrayOfPolicies.add(policy);
   }
 }
