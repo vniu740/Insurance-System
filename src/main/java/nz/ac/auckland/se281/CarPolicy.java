@@ -16,18 +16,18 @@ public class CarPolicy extends Policy {
 
   @Override
   public int calculateBasePremium(Profile loadedProfile) {
-    int basePremium = 0;
+    double basePremium = 0;
 
     // if the client is over 25
     if (Integer.parseInt(loadedProfile.getAgeProfileClass()) < 25) {
-      basePremium = (int)(0.15 * sumInsured);
+      basePremium = (0.15 * sumInsured);
     } else if (Integer.parseInt(loadedProfile.getAgeProfileClass()) >= 25) {
-      basePremium = (int)(0.15 * sumInsured);
+      basePremium = (0.1 * sumInsured);
     }
     if (mechanicalBreakdown == true) {
-        basePremium++;
-      }
-      return basePremium;
+      basePremium = basePremium + 80;
+    }
+    return (int) basePremium;
   }
 
   // @Override
