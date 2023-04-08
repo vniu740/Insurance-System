@@ -71,11 +71,14 @@ public class InsuranceSystem {
     // If the total number of profiles is 1, print the specific message for 1 profile
     if (numberOfProfilesInt == 1) {
 
+      MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", "", ":");
+
       // Set string value for policy or policies depending on number of policies a client has
       if (Integer.parseInt(profileCollection.get(0).getSizeOfArrayOfPolicies()) == 1) {
         stringForNumberOfPolicies = "y";
       }
-      // if the profile is loaded, print the profile with the loaded profile message (and number of policies)
+      // if the profile is loaded, print the profile with the loaded profile message (and number of
+      // policies)
       if (profileCollection.get(0).getProfileLoadedStatus() == true) {
         MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
             "*** ",
@@ -108,14 +111,32 @@ public class InsuranceSystem {
       // Get each profile and print it by looping through the Arraylist
       for (int i = 0; i < numberOfProfilesInt; i++) {
         rankString = String.valueOf(rank);
+
+        // Set string value for policy or policies depending on number of policies a client has
+        if (Integer.parseInt(profileCollection.get(i).getSizeOfArrayOfPolicies()) == 1) {
+          stringForNumberOfPolicies = "y";
+        } else {
+          stringForNumberOfPolicies = "ies";
+        }
+
         // if the profile is loaded, print the profile with the loaded profile message
         if (profileCollection.get(i).getProfileLoadedStatus() == true) {
-          MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
-              "*** ", rankString, getUsername(i), getAge(i));
+          MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
+              "*** ",
+              rankString,
+              getUsername(i),
+              getAge(i),
+              profileCollection.get(i).getSizeOfArrayOfPolicies(),
+              stringForNumberOfPolicies);
         } else {
-          // print the normal profile message
-          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
-              rankString, getUsername(i), getAge(i));
+          // If the profile is not loaded, print the normal profile message (and number of policies)
+          MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
+              "",
+              rankString,
+              getUsername(i),
+              getAge(i),
+              profileCollection.get(i).getSizeOfArrayOfPolicies(),
+              stringForNumberOfPolicies);
         }
         rank++;
       }
