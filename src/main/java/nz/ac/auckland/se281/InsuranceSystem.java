@@ -58,6 +58,7 @@ public class InsuranceSystem {
     int rank = 1;
     String numberOfProfilesString;
     String rankString;
+    String stringForNumberOfPolicies = "ies";
 
     // Get the total number of profiles stored in the arraylist profileCollections
     int numberOfProfilesInt = getTotalNumberOfProfiles();
@@ -69,16 +70,29 @@ public class InsuranceSystem {
 
     // If the total number of profiles is 1, print the specific message for 1 profile
     if (numberOfProfilesInt == 1) {
-      // MessageCli.PRINT_DB_POLICY_COUNT.printMessage("1", "", ":");
-      // MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", getUsername(0), getAge(0));
 
-      // if the profile is loaded, print the profile with the loaded profile message
+      // Set string value for policy or policies depending on number of policies a client has
+      if (Integer.parseInt(profileCollection.get(0).getSizeOfArrayOfPolicies()) == 1) {
+        stringForNumberOfPolicies = "y";
+      }
+      // if the profile is loaded, print the profile with the loaded profile message (and number of policies)
       if (profileCollection.get(0).getProfileLoadedStatus() == true) {
-        MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
-            "*** ", "1", getUsername(0), getAge(0));
+        MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
+            "*** ",
+            "1",
+            getUsername(0),
+            getAge(0),
+            profileCollection.get(0).getSizeOfArrayOfPolicies(),
+            stringForNumberOfPolicies);
       } else {
-        // If the profile is not loaded, print the normal profile message
-        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", getUsername(0), getAge(0));
+        // If the profile is not loaded, print the normal profile message (and number of policies)
+        MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
+            "",
+            "1",
+            getUsername(0),
+            getAge(0),
+            profileCollection.get(0).getSizeOfArrayOfPolicies(),
+            stringForNumberOfPolicies);
       }
     }
 
@@ -260,7 +274,9 @@ public class InsuranceSystem {
           newPolicy =
               new CarPolicy(
                   Integer.parseInt(options[0]), options[1], options[2], inputMechanicalBreakdown);
-          // System.out.println(newPolicy.toString());
+
+          // add new policy to loaded profile array
+          loadedProfile.addPolicyToProfileArray(newPolicy);
           break;
 
         case HOME:
@@ -282,6 +298,9 @@ public class InsuranceSystem {
         case LIFE:
           // create new life policy
           newPolicy = new LifePolicy(Integer.parseInt(options[0]));
+
+          // add new policy to loaded profile array
+          loadedProfile.addPolicyToProfileArray(newPolicy);
       }
     }
   }
