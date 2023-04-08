@@ -52,4 +52,8 @@ public class Profile {
   public String getSizeOfArrayOfPolicies() {
     return String.valueOf(arrayOfPolicies.size());
   }
+
+  public Policy getPolicyWithinArray(int i){
+    return arrayOfPolicies.get(i);
+  }
 }

@@ -327,6 +327,24 @@ public class InsuranceSystem {
           break;
 
         case LIFE:
+          // check if client already has a life policy
+          for (int i = 0; i < Integer.parseInt(loadedProfile.getSizeOfArrayOfPolicies()); i++) {
+            if (loadedProfile.getPolicyWithinArray(i) instanceof LifePolicy) {
+              // If loaded profile already has life policy, print message and return out of switch
+              MessageCli.ALREADY_HAS_LIFE_POLICY.printMessage(
+                  loadedProfile.getUserNameProfileClass());
+              return;
+            }
+          }
+
+          // check if client is over the age of 100
+          if (Integer.parseInt(loadedProfile.getAgeProfileClass()) > 100) {
+            // If loaded profile is over the age of 100, print message and return out of switch
+            MessageCli.OVER_AGE_LIMIT_LIFE_POLICY.printMessage(
+                loadedProfile.getUserNameProfileClass());
+            return;
+          }
+
           // create new life policy
           newPolicy = new LifePolicy(Integer.parseInt(options[0]));
 
