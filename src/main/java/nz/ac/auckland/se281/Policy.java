@@ -11,6 +11,11 @@ public abstract class Policy {
   // all policies calculate base premium differently
   public abstract int calculateBasePremium(Profile loadedProfile);
 
+  // Mehotd for getting sum insured
+  public String getSumInsured() {
+    return String.valueOf(sumInsured);
+  }
+
   // all policies get a discount if client has 2 or more policies in database
   public int calculateDiscount(Profile profileOfPolicyOwner) {
     double discountAmount;
@@ -19,16 +24,17 @@ public abstract class Policy {
       discountAmount = calculateBasePremium(profileOfPolicyOwner) * 0.1;
       discountAmount = calculateBasePremium(profileOfPolicyOwner) - discountAmount;
       return (int) discountAmount;
-    
-    // if the client has 3 or more policies, return premium with discount for three or more policies
+
+      // if the client has 3 or more policies, return premium with discount for three or more
+      // policies
     } else if (Integer.parseInt(profileOfPolicyOwner.getSizeOfArrayOfPolicies()) > 2) {
       discountAmount = calculateBasePremium(profileOfPolicyOwner) * 0.2;
       discountAmount = calculateBasePremium(profileOfPolicyOwner) - discountAmount;
       return (int) discountAmount;
-    
-    // if client has 0 or 1 policy, dont apply a discount 
+
+      // if client has 0 or 1 policy, dont apply a discount
     } else {
-      return Integer.parseInt(profileOfPolicyOwner.getSizeOfArrayOfPolicies());
+      return calculateBasePremium(profileOfPolicyOwner);
     }
   }
 }

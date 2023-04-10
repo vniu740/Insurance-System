@@ -14,6 +14,10 @@ public class CarPolicy extends Policy {
     this.mechanicalBreakdown = mechanicalBreakdown;
   }
 
+  public String getCarMakeModel() {
+    return makeAndModel;
+  }
+
   @Override
   public int calculateBasePremium(Profile loadedProfile) {
     double basePremium = 0;

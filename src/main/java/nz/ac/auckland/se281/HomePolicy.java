@@ -19,4 +19,10 @@ public class HomePolicy extends Policy {
       return (int) (0.01 * sumInsured);
     }
   }
+
+  public String getHomeAddress() {
+    return address;
 }
+
+}
+

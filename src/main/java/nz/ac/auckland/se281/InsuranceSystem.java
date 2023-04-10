@@ -48,6 +48,30 @@ public class InsuranceSystem {
     return notTitleCase;
   }
 
+  public void printPolicy(Policy policyToPrint, Profile profileToPrint) {
+    // if the policy is a HomePolicy print the required message
+    if (policyToPrint instanceof HomePolicy) {
+      MessageCli.PRINT_DB_HOME_POLICY.printMessage(
+          ((HomePolicy) policyToPrint).getHomeAddress(),
+          policyToPrint.getSumInsured(),
+          String.valueOf(((HomePolicy) policyToPrint).calculateBasePremium(profileToPrint)),
+          String.valueOf(policyToPrint.calculateDiscount(profileToPrint)));
+    }
+    if (policyToPrint instanceof CarPolicy) {
+      MessageCli.PRINT_DB_CAR_POLICY.printMessage(
+          ((CarPolicy) policyToPrint).getCarMakeModel(),
+          policyToPrint.getSumInsured(),
+          String.valueOf(((CarPolicy) policyToPrint).calculateBasePremium(profileToPrint)),
+          String.valueOf(policyToPrint.calculateDiscount(profileToPrint)));
+    }
+    if (policyToPrint instanceof LifePolicy) {
+      MessageCli.PRINT_DB_LIFE_POLICY.printMessage(
+          policyToPrint.getSumInsured(),
+          String.valueOf(((LifePolicy) policyToPrint).calculateBasePremium(profileToPrint)),
+          String.valueOf(policyToPrint.calculateDiscount(profileToPrint)));
+    }
+  }
+
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
 
@@ -96,6 +120,10 @@ public class InsuranceSystem {
             getAge(0),
             profileCollection.get(0).getSizeOfArrayOfPolicies(),
             stringForNumberOfPolicies);
+
+        for (Policy element : profileCollection.get(0).getPolicyArray()) {
+          printPolicy(element, profileCollection.get(0));
+        }
       }
     }
 

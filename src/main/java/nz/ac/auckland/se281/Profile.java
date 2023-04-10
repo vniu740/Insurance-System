@@ -56,4 +56,8 @@ public class Profile {
   public Policy getPolicyWithinArray(int i){
     return arrayOfPolicies.get(i);
   }
+
+  public ArrayList<Policy> getPolicyArray() {
+    return arrayOfPolicies;
+  }
 }
