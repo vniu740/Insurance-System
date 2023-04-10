@@ -53,7 +53,7 @@ public class Profile {
     return String.valueOf(arrayOfPolicies.size());
   }
 
-  public Policy getPolicyWithinArray(int i){
+  public Policy getPolicyWithinArray(int i) {
     return arrayOfPolicies.get(i);
   }
 

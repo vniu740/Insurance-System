@@ -22,7 +22,5 @@ public class HomePolicy extends Policy {
 
   public String getHomeAddress() {
     return address;
+  }
 }
-
-}
-
