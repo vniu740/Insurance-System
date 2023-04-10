@@ -111,6 +111,11 @@ public class InsuranceSystem {
             getAge(0),
             profileCollection.get(0).getSizeOfArrayOfPolicies(),
             stringForNumberOfPolicies);
+
+        for (Policy element : profileCollection.get(0).getPolicyArray()) {
+          printPolicy(element, profileCollection.get(0));
+        }
+
       } else {
         // If the profile is not loaded, print the normal profile message (and number of policies)
         MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
@@ -156,6 +161,11 @@ public class InsuranceSystem {
               getAge(i),
               profileCollection.get(i).getSizeOfArrayOfPolicies(),
               stringForNumberOfPolicies);
+
+          for (Policy element : profileCollection.get(i).getPolicyArray()) {
+            printPolicy(element, profileCollection.get(i));
+          }
+
         } else {
           // If the profile is not loaded, print the normal profile message (and number of policies)
           MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
@@ -165,6 +175,10 @@ public class InsuranceSystem {
               getAge(i),
               profileCollection.get(i).getSizeOfArrayOfPolicies(),
               stringForNumberOfPolicies);
+
+          for (Policy element : profileCollection.get(i).getPolicyArray()) {
+            printPolicy(element, profileCollection.get(i));
+          }
         }
         rank++;
       }
