@@ -33,11 +33,4 @@ public class CarPolicy extends Policy {
     }
     return (int) basePremium;
   }
-
-  // @Override
-  // public String toString() {
-  //     // TODO Auto-generated method stub
-  //     return "sum Insured =" + sumInsured + " make and model = " + makeAndModel + "License plate
-  // = " + licensePlate + "mechanical breakdown = " + mechanicalBreakdown;
-  // }
 }

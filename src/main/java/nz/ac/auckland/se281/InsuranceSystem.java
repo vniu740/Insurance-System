@@ -48,8 +48,9 @@ public class InsuranceSystem {
     return notTitleCase;
   }
 
+  // Method to determine type of policy and print required details of said policy
   public void printPolicy(Policy policyToPrint, Profile profileToPrint) {
-    // if the policy is a HomePolicy print the required message
+    // If the policy is a HomePolicy print the required message
     if (policyToPrint instanceof HomePolicy) {
       MessageCli.PRINT_DB_HOME_POLICY.printMessage(
           ((HomePolicy) policyToPrint).getHomeAddress(),
@@ -57,6 +58,7 @@ public class InsuranceSystem {
           String.valueOf(((HomePolicy) policyToPrint).calculateBasePremium(profileToPrint)),
           String.valueOf(policyToPrint.calculateDiscount(profileToPrint)));
     }
+    // If the policy is a CarPolicy print the required message
     if (policyToPrint instanceof CarPolicy) {
       MessageCli.PRINT_DB_CAR_POLICY.printMessage(
           ((CarPolicy) policyToPrint).getCarMakeModel(),
@@ -64,12 +66,22 @@ public class InsuranceSystem {
           String.valueOf(((CarPolicy) policyToPrint).calculateBasePremium(profileToPrint)),
           String.valueOf(policyToPrint.calculateDiscount(profileToPrint)));
     }
+    // If the policy is a LifePolicy print the required message
     if (policyToPrint instanceof LifePolicy) {
       MessageCli.PRINT_DB_LIFE_POLICY.printMessage(
           policyToPrint.getSumInsured(),
           String.valueOf(((LifePolicy) policyToPrint).calculateBasePremium(profileToPrint)),
           String.valueOf(policyToPrint.calculateDiscount(profileToPrint)));
     }
+  }
+
+  // Method to determine TotalToPay for a specific client
+  public String calculateTotalToPay(Profile profileToPay) {
+    int totalToPay = 0;
+    for (Policy element : profileToPay.getPolicyArray()) {
+      totalToPay = totalToPay + element.calculateDiscount(profileToPay);
+    }
+    return String.valueOf(totalToPay);
   }
 
   public InsuranceSystem() {
@@ -104,28 +116,33 @@ public class InsuranceSystem {
       // if the profile is loaded, print the profile with the loaded profile message (and number of
       // policies)
       if (profileCollection.get(0).getProfileLoadedStatus() == true) {
-        MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
+        MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage(
             "*** ",
             "1",
             getUsername(0),
             getAge(0),
             profileCollection.get(0).getSizeOfArrayOfPolicies(),
-            stringForNumberOfPolicies);
+            stringForNumberOfPolicies,
+            calculateTotalToPay(profileCollection.get(0)));
 
+        // Loop through policy Arraylist of specific profile and print its details
         for (Policy element : profileCollection.get(0).getPolicyArray()) {
           printPolicy(element, profileCollection.get(0));
         }
 
       } else {
-        // If the profile is not loaded, print the normal profile message (and number of policies)
-        MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
+        // If the profile is not loaded, print the normal profile message (and number of policies
+        // and total to pay)
+        MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage(
             "",
             "1",
             getUsername(0),
             getAge(0),
             profileCollection.get(0).getSizeOfArrayOfPolicies(),
-            stringForNumberOfPolicies);
+            stringForNumberOfPolicies,
+            calculateTotalToPay(profileCollection.get(0)));
 
+        // Loop through policy Arraylist of specific profile and print its details
         for (Policy element : profileCollection.get(0).getPolicyArray()) {
           printPolicy(element, profileCollection.get(0));
         }
@@ -154,28 +171,32 @@ public class InsuranceSystem {
 
         // if the profile is loaded, print the profile with the loaded profile message
         if (profileCollection.get(i).getProfileLoadedStatus() == true) {
-          MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
+          MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage(
               "*** ",
               rankString,
               getUsername(i),
               getAge(i),
               profileCollection.get(i).getSizeOfArrayOfPolicies(),
-              stringForNumberOfPolicies);
+              stringForNumberOfPolicies,
+              calculateTotalToPay(profileCollection.get(i)));
 
+          // Loop through policy Arraylist of specific profile and print its details
           for (Policy element : profileCollection.get(i).getPolicyArray()) {
             printPolicy(element, profileCollection.get(i));
           }
 
         } else {
           // If the profile is not loaded, print the normal profile message (and number of policies)
-          MessageCli.PRINT_DB_PROFILE_HEADER_MEDIUM.printMessage(
+          MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage(
               "",
               rankString,
               getUsername(i),
               getAge(i),
               profileCollection.get(i).getSizeOfArrayOfPolicies(),
-              stringForNumberOfPolicies);
+              stringForNumberOfPolicies,
+              calculateTotalToPay(profileCollection.get(i)));
 
+          // Loop through policy Arraylist of specific profile and print its details
           for (Policy element : profileCollection.get(i).getPolicyArray()) {
             printPolicy(element, profileCollection.get(i));
           }
