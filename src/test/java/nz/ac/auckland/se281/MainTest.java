@@ -684,6 +684,242 @@ public class MainTest {
       assertContains("2: Tom, 25");
       assertContains("3: Jenny, 23");
     }
+
+    @Test
+    public void T3_01_add_car_policy_no_mechanical_under_25() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "jordan",
+              POLICY_CAR,
+              options("55000", "Mazda Demio", "SUB123", "no"),
+              PRINT_DB));
+
+      assertContains("Profile loaded for Jordan.");
+      assertContains("New car policy created for Jordan.");
+
+      assertContains("Database has 3 profiles:");
+      assertContains("*** 1: Jordan, 21, 1 policy");
+      assertContains("2: Tom, 25, 0 policies");
+      assertContains("3: Jenny, 23, 0 policies");
+
+      assertContains("Car Policy (Mazda Demio, Sum Insured: $55000, Premium: $8250 -> $8250)");
+    }
+
+    @Test
+    public void T3_02_add_car_policy_yes_mechanical_under_25() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "jordan",
+              POLICY_CAR,
+              options("55000", "Mazda Demio", "SUB123", "yes"),
+              PRINT_DB));
+
+      assertContains("Profile loaded for Jordan.");
+      assertContains("New car policy created for Jordan.");
+
+      assertContains("Database has 3 profiles:");
+      assertContains("*** 1: Jordan, 21, 1 policy");
+      assertContains("2: Tom, 25, 0 policies");
+      assertContains("3: Jenny, 23, 0 policies");
+
+      assertContains("Car Policy (Mazda Demio, Sum Insured: $55000, Premium: $8330 -> $8330)");
+    }
+
+    @Test
+    public void T3_03_add_car_policy_no_mechanical_over_25() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "tom",
+              POLICY_CAR,
+              options("55000", "Mazda Demio", "SUB123", "no"),
+              PRINT_DB));
+
+      assertContains("Profile loaded for Tom.");
+      assertContains("New car policy created for Tom.");
+
+      assertContains("Database has 3 profiles:");
+      assertContains("1: Jordan, 21, 0 policies");
+      assertContains("*** 2: Tom, 25, 1 policy");
+      assertContains("3: Jenny, 23, 0 policies");
+
+      assertContains("Car Policy (Mazda Demio, Sum Insured: $55000, Premium: $5500 -> $5500)");
+    }
+
+    @Test
+    public void T3_04_add_life_policy_when_client_already_has_one() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "tom",
+              POLICY_LIFE,
+              options("1000000"),
+              POLICY_LIFE,
+              options("1000000"),
+              PRINT_DB));
+
+      assertContains("Profile loaded for Tom.");
+      assertContains("New life policy created for Tom.");
+      assertContains("Tom already has a life policy. No new policy was created.");
+
+      assertContains("Database has 3 profiles:");
+      assertContains("1: Jordan, 21, 0 policies");
+      assertContains("*** 2: Tom, 25, 1 policy");
+      assertContains("3: Jenny, 23, 0 policies");
+
+      assertContains("Life Policy (Sum Insured: $1000000, Premium: $12500 -> $12500)");
+
+      assertDoesNotContain("*** 2: Tom, 25, 2 policies");
+    }
+
+    @Test
+    public void T3_05_add_one_home_policy_loaded_profile_check_total_to_pay() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "Jenny",
+              POLICY_HOME,
+              options("1000000", "20 Symonds Street", "yes"),
+              PRINT_DB));
+
+      assertContains("Profile loaded for Jenny.");
+
+      assertContains("Database has 3 profiles:");
+      assertContains("1: Jordan, 21, 0 policies for a total of $0");
+      assertContains("2: Tom, 25, 0 policies for a total of $0");
+      assertContains("*** 3: Jenny, 23, 1 policy for a total of $20000");
+
+      assertContains("New home policy created for Jenny.");
+
+      assertContains(
+          "Home Policy (20 Symonds Street, Sum Insured: $1000000, Premium: $20000 -> $20000)");
+    }
+
+    @Test
+    public void T3_06_two_different_policies_home_life_one_profile_check_total_to_pay()
+        throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "Jenny",
+              POLICY_HOME,
+              options("1000000", "20 Symonds Street", "yes"),
+              POLICY_LIFE,
+              options("1000000"),
+              PRINT_DB));
+
+      assertContains("Profile loaded for Jenny.");
+      assertContains("New home policy created for Jenny.");
+      assertContains("New life policy created for Jenny.");
+
+      assertContains("Database has 3 profiles:");
+      assertContains("1: Jordan, 21, 0 policies for a total of $0");
+      assertContains("2: Tom, 25, 0 policies for a total of $0");
+      assertContains("*** 3: Jenny, 23, 2 policies for a total of $29070");
+
+      assertContains(
+          "Home Policy (20 Symonds Street, Sum Insured: $1000000, Premium: $20000 -> $18000)");
+      assertContains("Life Policy (Sum Insured: $1000000, Premium: $12300 -> $11070)");
+    }
+
+    @Test
+    public void T3_07_three_policies_one_profile_check_total_to_pay() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "Jenny",
+              POLICY_HOME,
+              options("1000000", "20 Symonds Street", "yes"),
+              POLICY_HOME,
+              options("1000000", "20 Queen Street", "no"),
+              POLICY_LIFE,
+              options("1000000"),
+              PRINT_DB));
+
+      assertContains("Profile loaded for Jenny.");
+      assertContains("New home policy created for Jenny.");
+      assertContains("New life policy created for Jenny.");
+
+      assertContains("Database has 3 profiles:");
+      assertContains("1: Jordan, 21, 0 policies for a total of $0");
+      assertContains("2: Tom, 25, 0 policies for a total of $0");
+      assertContains("*** 3: Jenny, 23, 3 policies for a total of $33840");
+
+      assertContains(
+          "Home Policy (20 Symonds Street, Sum Insured: $1000000, Premium: $20000 -> $16000)");
+      assertContains(
+          "Home Policy (20 Queen Street, Sum Insured: $1000000, Premium: $10000 -> $8000)");
+      assertContains("Life Policy (Sum Insured: $1000000, Premium: $12300 -> $9840)");
+    }
+
+    @Test
+    public void T3_08_three_policies_three_profiles_check_total_to_pay() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "Jenny",
+              POLICY_CAR,
+              options("60000", "Toyota Aqua", "HNK100", "no"),
+              POLICY_HOME,
+              options("1000000", "20 Queen Street", "no"),
+              POLICY_LIFE,
+              options("1000000"),
+              UNLOAD_PROFILE,
+              LOAD_PROFILE,
+              "jordan",
+              POLICY_LIFE,
+              options("2000000"),
+              UNLOAD_PROFILE,
+              LOAD_PROFILE,
+              "tom",
+              POLICY_CAR,
+              options("88000", "Mazda Demio", "SUB123", "yes"),
+              POLICY_HOME,
+              options("5000000", "123 Apple Street", "yes"),
+              UNLOAD_PROFILE,
+              PRINT_DB));
+
+      assertContains("Profile loaded for Jenny.");
+      assertContains("New car policy created for Jenny.");
+      assertContains("New home policy created for Jenny.");
+      assertContains("New life policy created for Jenny.");
+      assertContains("Profile unloaded for Jenny.");
+
+      assertContains("Profile loaded for Jordan.");
+      assertContains("New life policy created for Jordan.");
+      assertContains("Profile unloaded for Jordan.");
+
+      assertContains("Profile loaded for Tom.");
+      assertContains("New car policy created for Tom.");
+      assertContains("New home policy created for Tom.");
+      assertContains("Profile unloaded for Tom.");
+
+      assertContains("Database has 3 profiles:");
+      assertContains("1: Jordan, 21, 1 policy for a total of $24200");
+      assertContains("2: Tom, 25, 2 policies for a total of $97992");
+      assertContains("3: Jenny, 23, 3 policies for a total of $25040");
+
+      assertContains("Life Policy (Sum Insured: $2000000, Premium: $24200 -> $24200)");
+
+      assertContains("Car Policy (Mazda Demio, Sum Insured: $88000, Premium: $8880 -> $7992)");
+      assertContains(
+          "Home Policy (123 Apple Street, Sum Insured: $5000000, Premium: $100000 -> $90000)");
+
+      assertContains("Car Policy (Toyota Aqua, Sum Insured: $60000, Premium: $9000 -> $7200)");
+      assertContains(
+          "Home Policy (20 Queen Street, Sum Insured: $1000000, Premium: $10000 -> $8000)");
+      assertContains("Life Policy (Sum Insured: $1000000, Premium: $12300 -> $9840)");
+    }
   }
 
   private static final Object[] CREATE_SOME_CLIENTS =
