@@ -544,6 +544,110 @@ public class MainTest {
       assertDoesNotContain("Database has 3 profiles", true);
       assertDoesNotContain("Database has 4 profiles", true);
     }
+    // Full tests Cases from CheckPoint #1
+    @Test
+    public void T1_07_web_ignore_short_name_to_titlecase() throws Exception {
+      runCommands(CREATE_PROFILE, "aL", "21", PRINT_DB);
+      assertContains("Database has 0 profiles.");
+      assertContains(
+          "'Al' is an invalid username, it should be at least 3 characters long. No profile was"
+              + " created.");
+      assertDoesNotContain("Database has 1 profile", true);
+      assertDoesNotContain("New profile created", true);
+      assertDoesNotContain("21");
+    }
+
+    @Test
+    public void T1_08_web_add_five_clients() throws Exception {
+      runCommands( //
+          CREATE_PROFILE,
+          "Jordan",
+          "21", //
+          CREATE_PROFILE,
+          "Jenny",
+          "22", //
+          CREATE_PROFILE,
+          "TOM",
+          "23", //
+          CREATE_PROFILE,
+          "tOmmY",
+          "24", //
+          CREATE_PROFILE,
+          "aLeX",
+          "25", //
+          PRINT_DB);
+
+      assertContains("Database has 5 profiles:");
+      assertContains("1: Jordan, 21");
+      assertContains("2: Jenny, 22");
+      assertContains("3: Tom, 23");
+      assertContains("4: Tommy, 24");
+      assertContains("5: Alex, 25");
+    }
+
+    @Test
+    public void T1_09_web_add_ignore_duplicate() throws Exception {
+      runCommands(CREATE_PROFILE, "Jordan", "21", CREATE_PROFILE, "Jordan", "35", PRINT_DB);
+      assertContains("Database has 1 profile:");
+      assertContains("1: Jordan, 21");
+
+      assertContains("Usernames must be unique. No profile was created for 'Jordan'.");
+
+      assertDoesNotContain("Database has 0 profiles", true);
+      assertDoesNotContain("Database has 2 profiles", true);
+      assertDoesNotContain("Jordan, 35", true);
+    }
+
+    @Test
+    public void T1_10_web_add_ignore_duplicate_added_later() throws Exception {
+      runCommands(
+          CREATE_PROFILE,
+          "tom",
+          "21", //
+          CREATE_PROFILE,
+          "jordan",
+          "25", //
+          CREATE_PROFILE,
+          "Jenny",
+          "23", //
+          CREATE_PROFILE,
+          "TOM",
+          "32", //
+          PRINT_DB);
+      assertContains("Database has 3 profiles:");
+      assertContains("1: Tom, 21");
+      assertContains("2: Jordan, 25");
+      assertContains("3: Jenny, 23");
+
+      assertContains("Usernames must be unique. No profile was created for 'Tom'.");
+
+      assertDoesNotContain("Database has 4 profiles", true);
+      assertDoesNotContain("Tom, 32", true);
+    }
+
+    @Test
+    public void T1_11_web_ignore_invalid_age_negative() throws Exception {
+      runCommands(CREATE_PROFILE, "Jordan", "-1", PRINT_DB);
+      assertContains("Database has 0 profiles.");
+      assertContains(
+          "'-1' is an invalid age, please provide a positive whole number only. No profile was"
+              + " created for Jordan.");
+      assertDoesNotContain("Database has 1 profile", true);
+      assertDoesNotContain("Jordan, -1", true);
+      assertDoesNotContain("New profile created", true);
+    }
+
+    @Test
+    public void T1_12_web_add_success_after_invalid_age() throws Exception {
+      runCommands(CREATE_PROFILE, "Jordan", "-1", CREATE_PROFILE, "Jordan", "20", PRINT_DB);
+      assertContains(
+          "'-1' is an invalid age, please provide a positive whole number only. No profile was"
+              + " created for Jordan.");
+      assertContains("Database has 1 profile:");
+      assertContains("1: Jordan, 20");
+      assertDoesNotContain("Database has 0 profiles", true);
+      assertDoesNotContain("Jordan, -1", true);
+    }
 
     @Test
     public void T2_01_load_profile_in_database_then_load_profile_not_in_database()
