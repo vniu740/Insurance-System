@@ -14,10 +14,17 @@ public class CarPolicy extends Policy {
     this.mechanicalBreakdown = mechanicalBreakdown;
   }
 
+  // Method to return Make and Model as a string
   public String getCarMakeModel() {
     return makeAndModel;
   }
 
+  // Method to return license plate as a string
+  public String getlicensePlate() {
+    return licensePlate;
+  }
+
+  // Method to calculate the Base Premium for a car policy
   @Override
   public int calculateBasePremium(Profile loadedProfile) {
     double basePremium = 0;

@@ -42,6 +42,7 @@ public class InsuranceSystem {
     return gotProfile.getAgeProfileClass();
   }
 
+  // Method to turn a string to title case
   public String turnToTitleCase(String notTitleCase) {
     notTitleCase = notTitleCase.toLowerCase();
     notTitleCase = notTitleCase.substring(0, 1).toUpperCase() + notTitleCase.substring(1);
@@ -209,8 +210,6 @@ public class InsuranceSystem {
   public void createNewProfile(String userName, String age) {
 
     // Change the username input to title case
-    // userName = userName.toLowerCase();
-    // userName = userName.substring(0, 1).toUpperCase() + userName.substring(1);
     userName = turnToTitleCase(userName);
 
     // Check if profile is already loaded, if it is, print out invalid message and stop running

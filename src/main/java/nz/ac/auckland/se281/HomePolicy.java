@@ -11,6 +11,7 @@ public class HomePolicy extends Policy {
     this.rental = rental;
   }
 
+  // Method to calculate the Base Premium for a home policy
   @Override
   public int calculateBasePremium(Profile loadedProfile) {
     if (this.rental == true) {
@@ -20,6 +21,7 @@ public class HomePolicy extends Policy {
     }
   }
 
+  // Method to return home address as a string
   public String getHomeAddress() {
     return address;
   }

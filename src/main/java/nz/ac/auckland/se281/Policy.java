@@ -11,7 +11,7 @@ public abstract class Policy {
   // all policies calculate base premium differently
   public abstract int calculateBasePremium(Profile loadedProfile);
 
-  // Mehotd for getting sum insured
+  // Method for getting sum insured
   public String getSumInsured() {
     return String.valueOf(sumInsured);
   }

@@ -25,38 +25,39 @@ public class Profile {
     return age;
   }
 
-  // // Turn profile attributes into a string
-  // @Override
-  // public String toString() {
-  //   return userName + ", " + age;
-  // }
-
+  // Method for setting the profile loaded status to true
   public boolean setProfileLoadedStatusToTrue() {
     profileLoadedStatus = true;
     return profileLoadedStatus;
   }
 
+  // Method for setting the profile loaded status to false
   public boolean setProfileLoadedStatusToFalse() {
     profileLoadedStatus = false;
     return profileLoadedStatus;
   }
 
+  // Method for getting the profile loaded status
   public boolean getProfileLoadedStatus() {
     return profileLoadedStatus;
   }
 
+  // Method for adding a policy to the profile's policy array
   public void addPolicyToProfileArray(Policy policy) {
     arrayOfPolicies.add(policy);
   }
 
+  // Method for getting the size of the profile's policy array
   public String getSizeOfArrayOfPolicies() {
     return String.valueOf(arrayOfPolicies.size());
   }
 
+  // Method for a particular policy within the profile's policy array
   public Policy getPolicyWithinArray(int i) {
     return arrayOfPolicies.get(i);
   }
 
+  // Method for getting the profile's policy array
   public ArrayList<Policy> getPolicyArray() {
     return arrayOfPolicies;
   }

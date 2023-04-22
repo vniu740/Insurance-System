@@ -6,6 +6,7 @@ public class LifePolicy extends Policy {
     super(sumInsured);
   }
 
+  // Method to calculate the Base Premium for a life policy
   @Override
   public int calculateBasePremium(Profile loadedProfile) {
     double basePremium;
